@@ -28,14 +28,14 @@ export default function Product() {
     }
   };
   return (
-    <div>
+     <div className="product-grid"> {/* This class will control the layout */}
       {products &&
         products.map((product) => (
-          <div key={product._id}>
-            <img src={product.imgUrl} width={100}/>
+          <div key={product._id} className="product-card">
+            <img src={product.imgUrl} alt={product.productName} />
             <h3>{product.productName}</h3>
             <p>{product.description}</p>
-            <h4>{product.price}</h4>
+            <h4>${product.price}</h4>
             <button onClick={() => addToCart(product)}>Add to Cart</button>
           </div>
         ))}

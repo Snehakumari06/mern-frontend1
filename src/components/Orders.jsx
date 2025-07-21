@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useContext } from "react";
 import { AppContext } from "../App";
-import { useFetcher } from "react-router-dom";
+// import { useFetcher } from "react-router-dom"; // This import is not used and can be removed
 export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState();
@@ -43,7 +43,7 @@ export default function Orders() {
   return (
     <div>
       <h2>Order Management</h2>
-      <div>
+      <div className="orders-filter"> {/* Added a wrapper class for the filter */}
         <select onChange={(e) => setStatus(e.target.value)}>
           <option value="">All</option>
           <option value="Pending" >
@@ -54,9 +54,10 @@ export default function Orders() {
         </select>
         {/* <button>Show</button> */}
       </div>
+      {error && <p className="error-message">{error}</p>} {/* Display error message */}
       {orders &&
         orders.map((order) => (
-          <li>
+          <li key={order._id}> {/* Added key for list items */}
             {order._id}-{order.orderValue}-{order.status}-
             {order.status === "Pending" && (
               <>
@@ -71,11 +72,11 @@ export default function Orders() {
             )}
           </li>
         ))}
-        <div>
+        <div className="pagination-controls"> {/* Applied pagination class */}
         <button disabled={page === 1} onClick={() => setPage(page - 1)}>
           Previous
         </button>
-        Page {page} of {totalPages}
+        <span>Page {page} of {totalPages}</span>
         <button
           disabled={page === totalPages}
           onClick={() => setPage(page + 1)}
